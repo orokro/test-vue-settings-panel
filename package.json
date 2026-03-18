@@ -11,7 +11,8 @@
   "dependencies": {
     "material-icons": "^1.13.14",
     "sass": "^1.98.0",
-    "vue": "^3.5.29"
+    "vue": "^3.5.29",
+    "vue-settings-panel": "^0.0.3"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^6.0.4",
