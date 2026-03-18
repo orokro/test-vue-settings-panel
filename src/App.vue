@@ -4,6 +4,33 @@ import { VueSettingsPanel, TYPES, createSettings } from 'vue-settings-panel'
 import 'vue-settings-panel/dist/style.css'
 import ThemeSwitcher from './components/ThemeSwitcher.vue'
 
+// Import custom components
+import Vector2Edit from './components/Vector2Edit.vue'
+import Vector3Edit from './components/Vector3Edit.vue'
+import PanEdit from './components/PanEdit.vue'
+
+// Define custom types
+const CUSTOM_TYPES = {
+  Vector2: {
+    name: 'Vector2',
+    slug: 'vector2',
+    defaultValue: { x: 0, y: 0 },
+    component: Vector2Edit,
+  },
+  Vector3: {
+    name: 'Vector3',
+    slug: 'vector3',
+    defaultValue: { x: 0, y: 0, z: 0 },
+    component: Vector3Edit,
+  },
+  Pan: {
+    name: 'Pan',
+    slug: 'pan',
+    defaultValue: 0,
+    component: PanEdit,
+  }
+}
+
 // 1. Define Specification Profiles
 const specs = {
   default: {
@@ -45,6 +72,9 @@ const specs = {
       safeMode: { name: 'Scripts Safe Mode', desc: 'FS protection', cats: ['scripting.runtime'], type: TYPES.Boolean, default: true },
       enableBeta: { name: 'Beta Features', desc: 'Experimental algorithms', cats: ['advanced'], tags: ['experimental', 'test'], type: TYPES.Boolean, default: false },
       masterGain: { name: 'Master Output Gain', desc: 'Calibration level for the main output stage', cats: ['advanced'], tags: ['gain', 'volume', 'loudness'], type: TYPES.FloatRange, opts: { min: -60, max: 12, step: 0.1, showInput: true }, default: 0 },
+      cameraPos: { name: 'Camera Position', desc: '3D viewport camera', cats: ['advanced'], type: CUSTOM_TYPES.Vector3, default: { x: 0, y: 5, z: -10 } },
+      lightDir: { name: 'Light Direction', desc: 'Main light source orientation', cats: ['advanced'], type: CUSTOM_TYPES.Vector2, default: { x: 0.5, y: -0.5 } },
+      masterPan: { name: 'Master Pan', desc: 'Stereo balance', cats: ['advanced'], type: CUSTOM_TYPES.Pan, default: 0 },
       userHandle: { 
         name: 'User Handle', 
         desc: 'Unique identifier for community features', 
@@ -164,6 +194,9 @@ const settingsState = createSettings(specs.default, {
   safeMode: true,
   enableBeta: false,
   masterGain: -3.5,
+  cameraPos: { x: 10, y: 15.5, z: -20 },
+  lightDir: { x: 0.1, y: 0.9 },
+  masterPan: -12,
   userHandle: 'pro_editor',
   userBio: 'Music producer and sound designer.',
   preferredTheme: 'Modern',
